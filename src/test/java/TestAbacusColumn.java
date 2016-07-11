@@ -1,4 +1,3 @@
-import abacus.Abacus;
 import abacus.AbacusColumn;
 import abacus.AbacusDataModel;
 
@@ -11,7 +10,7 @@ import java.awt.*;
  */
 public class TestAbacusColumn {
     public static void main(String[] args) {
-        AbacusDataModel model = new AbacusDataModel(10);
+        AbacusDataModel model = new AbacusDataModel(0);
         AbacusColumn column = new AbacusColumn(model, 0);
         AbacusColumn column1 = new AbacusColumn(model, 1);
 
@@ -27,11 +26,12 @@ public class TestAbacusColumn {
                 frame.setSize(100, 400);
                 frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 Timer t = new Timer(1000, e -> {
-                    boolean[] updates = model.add(1);
+
+                    boolean[] updates = model.add(2);
                     if(updates[0])
-                        column.refreshBeads();
-                    if(updates[1])
-                        column1.refreshBeads();
+                        column.refreshBeadsAndAnimate();
+                    if(updates.length >= 2 && updates[1])
+                        column1.refreshBeadsAndAnimate();
                 });
                 t.start();
             }
