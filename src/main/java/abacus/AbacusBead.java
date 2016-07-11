@@ -60,13 +60,14 @@ public class AbacusBead {
      */
     public void animateUp() {
         Timer t = new Timer(
-            1000 / pixelRate + 10,
+            1000 / pixelRate,
             e->{
-                Timer source = (Timer) e.getSource();
                 int upState = (int)(upFraction*column.getHeight());
                 if(Math.abs(currentState - upState) < pixelRate)
                 {
                     currentState = upState;
+                    column.repaint();
+                    Timer source = (Timer) e.getSource();
                     source.stop();
                     return;
                 }
@@ -94,6 +95,7 @@ public class AbacusBead {
             return true;
         }
         currentState = upState;
+        column.requestRepaint();
         return false;
     }
 
@@ -104,13 +106,14 @@ public class AbacusBead {
      */
     public void animateDown() {
         Timer t = new Timer(
-                1000 / pixelRate + 10,
+                1000 / pixelRate,
                 e->{
-                    Timer source = (Timer) e.getSource();
                     int downState = (int)(downFraction*column.getHeight());
                     if(Math.abs(currentState - downState) < pixelRate)
                     {
                         currentState = downState;
+                        column.repaint();
+                        Timer source = (Timer) e.getSource();
                         source.stop();
                         return;
                     }
@@ -137,6 +140,7 @@ public class AbacusBead {
             return true;
         }
         currentState = downState;
+        column.requestRepaint();
         return false;
     }
 }

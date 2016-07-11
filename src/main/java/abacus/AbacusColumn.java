@@ -2,12 +2,13 @@ package abacus;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by neilprajapati on 7/8/16.
  * neilprajapati, dont forget to javaDoc this file.
  *
- * TODO; refractor bead into a seperate JComponent.
  */
 public class AbacusColumn extends JComponent{
     private AbacusDataModel model;
@@ -17,6 +18,11 @@ public class AbacusColumn extends JComponent{
     private AbacusBead[] beads; //the 5 bead is a zero index, rest going down....
     private boolean isRequestingRepaint = false;
 
+    /**
+     * Sole Constructor
+     * @param model the <code>AbacusModel</code> the column will read and display
+     * @param columnNumber the exact column (0 indexed right to left) this <code>AbacusColumn</code> represents and displays
+     */
     public AbacusColumn(AbacusDataModel model, int columnNumber) {
         this.model = model;
         this.columnNumber = columnNumber;
@@ -67,58 +73,56 @@ public class AbacusColumn extends JComponent{
 
         //first we always move the 5
         if (newDisplayedValue >= 5) {
-            beads[0].animateUp();
+            beads[0].animateUp(); //FIXME
         } else {
             beads[0].animateDown();
         }
 
-        //now we have to figure out how many beads to move...
-        for(int i = 1; i <= displayedValue %5; i++)
-        {
-            final int index = i;
-            Timer t = new Timer(
-                    AbacusBead.pixelRate + 10, //5 millis so it has time to snap into position
-                    e -> {
-                        Timer timer = (Timer) e.getSource();
-                        if(!beads[index].stepUp()) timer.stop();
-                        if(isRequestingRepaint) {
-                            isRequestingRepaint = false;
-                            repaint();
+
+        Timer upBeadTimer = new Timer(
+                AbacusBead.pixelRate,
+                new ActionListener() {
+                    private int value = displayedValue;
+
+                    public void actionPerformed(ActionEvent e) {
+                        boolean allDone = true;
+                        for (int i = 1; i <= value % 5; i++) {
+                            if (beads[i].stepUp()) allDone = false;
                         }
-                    }
-            );
-            t.start();
-
-        }
-
-
-        for(int i = displayedValue %5 + 1; i < beads.length; i++)
-        {
-            final int index = i;
-            Timer t = new Timer(
-                    AbacusBead.pixelRate + 10, //move faster than pixels so it has time to reach snap condition
-                    e -> {
-                        Timer timer = (Timer) e.getSource();
-                        if(!beads[index].stepDown()) timer.stop();
-                        if(isRequestingRepaint) {
-                            isRequestingRepaint = false;
-                            repaint();
+                        if (allDone) {
+                            Timer timer = (Timer) e.getSource();
+                            timer.stop();
                         }
-                    }
-            );
-            t.start();
 
-        }
+                        AbacusColumn.this.doRepaintIfRequested();
+                    }
+                }
+        );
+        upBeadTimer.start();
+
+
+        Timer downBeadTimer = new Timer(
+                AbacusBead.pixelRate,
+                new ActionListener() {
+                    private int value = displayedValue;
+
+                    public void actionPerformed(ActionEvent e) {
+                        boolean allDone = true;
+                        for (int i = value % 5 + 1; i < beads.length; i++) {
+                            if (beads[i].stepDown()) allDone = false;
+                        }
+                        if (allDone) {
+                            Timer timer = (Timer) e.getSource();
+                            timer.stop();
+                        }
+                        AbacusColumn.this.doRepaintIfRequested();
+                    }
+                }
+        );
+        downBeadTimer.start();
 
         //make sure we update displayed value;
         displayedValue = newDisplayedValue;
-    }
-
-    @Deprecated
-    public void animateAllUp()
-    {
-        for(AbacusBead bead:beads)
-            bead.animateUp();
     }
 
     /**
@@ -147,9 +151,25 @@ public class AbacusColumn extends JComponent{
     }
 
 
+
+    //===========================MAKE REPAINTS MORE EFFIECNET================================================//
+
+    /**
+     * notifies the abacus column to refresh when possible. Usually used
+     * when multiple changes are made at the same time and calling <code>repaint()</code>
+     * for each would be redundant
+     */
     public void requestRepaint()
     {
         isRequestingRepaint = true;
+    }
+
+
+    private void doRepaintIfRequested() {
+        if(isRequestingRepaint) {
+            isRequestingRepaint = false;
+            repaint();
+        }
     }
 
 
