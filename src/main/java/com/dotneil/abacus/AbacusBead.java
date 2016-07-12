@@ -54,33 +54,6 @@ public class AbacusBead {
     //-----------ANIMATING UP AND DOWN-----------//
 
     /**
-     * moves the bead at a rate of <code>AbacusBead.pixelRate</code> upwards until
-     * it reaches the up position
-     */
-    public void animateUp() {
-        Timer t = new Timer(
-            1000 / pixelRate,
-            e->{
-                int upState = (int)(upFraction*column.getHeight());
-                if(Math.abs(currentState - upState) < pixelRate)
-                {
-                    currentState = upState;
-                    column.repaint();
-                    Timer source = (Timer) e.getSource();
-                    source.stop();
-                    return;
-                }
-                currentState += pixelRate * (currentState > upState? -1: 1);
-                column.repaint();
-            }
-        );
-        t.start();
-
-        //for it not to return until the process is down;
-        //while(t.isRunning());
-    }
-
-    /**
      * Steps the com.dotneil.abacus bead <code>AbacusBead.pixelRate</code> up.
      *
      * @return true if there was any movement, false otherwise
@@ -96,32 +69,6 @@ public class AbacusBead {
         currentState = upState;
         column.requestRepaint();
         return false;
-    }
-
-
-    /**
-     * moves the bead at a rate of <code>AbacusBead.pixelRate</code> downward until
-     * it reaches the down position
-     */
-    public void animateDown() {
-        Timer t = new Timer(
-                1000 / pixelRate,
-                e->{
-                    int downState = (int)(downFraction*column.getHeight());
-                    if(Math.abs(currentState - downState) < pixelRate)
-                    {
-                        currentState = downState;
-                        column.repaint();
-                        Timer source = (Timer) e.getSource();
-                        source.stop();
-                        return;
-                    }
-                    currentState += pixelRate * (currentState > downState? -1: 1);
-                    column.repaint();
-                }
-        );
-        t.start();
-
     }
 
     /**

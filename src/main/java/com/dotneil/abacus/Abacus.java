@@ -37,6 +37,8 @@ public class Abacus extends JComponent {
     }
 
 
+
+    //===============================MAIN METHODS============================================//
     /**
      * Given an operation, it display the changes needed on the abacus to
      * preform it.

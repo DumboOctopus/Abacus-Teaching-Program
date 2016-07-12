@@ -22,6 +22,8 @@ public class AbacusDisplayWindow extends JFrame {
     private Abacus abacus;
     private JTextField expressionField;
 
+
+    //==========================CONSTRUTOR + HELPERS========================//
     public AbacusDisplayWindow() {
 
         setUpMainMenu();

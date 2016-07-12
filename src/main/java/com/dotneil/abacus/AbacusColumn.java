@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
  * Created by neilprajapati on 7/8/16.
  * neilprajapati, dont forget to javaDoc this file.
  *
+ * Fixme: when resizing, beads do not work.
  */
 public class AbacusColumn extends JComponent{
     private AbacusDataModel model;
@@ -101,70 +102,6 @@ public class AbacusColumn extends JComponent{
     }
 
 
-    /**
-     * Animates the beads positions to match the model.
-     */
-    public void animateBeadsAndNotify(AbacusAnimationListener listener)
-    {
-        int newDisplayedValue = model.getColumn(columnNumber);
-        if(newDisplayedValue == displayedValue) return; //short circut here
-
-        //first we always move the 5
-        if (newDisplayedValue >= 5) {
-            beads[0].animateUp(); //FIXME
-        } else {
-            beads[0].animateDown();
-        }
-
-
-        Timer upBeadTimer = new Timer(
-                AbacusBead.pixelRate,
-                new ActionListener() {
-                    private int value = displayedValue;
-
-                    public void actionPerformed(ActionEvent e) {
-                        boolean allDone = true;
-                        for (int i = 1; i <= value % 5; i++) {
-                            if (beads[i].stepUp()) allDone = false;
-                        }
-                        if (allDone) {
-                            Timer timer = (Timer) e.getSource();
-                            timer.stop();
-                        }
-
-                        AbacusColumn.this.doRepaintIfRequested();
-                    }
-                }
-        );
-        upBeadTimer.start();
-
-
-        Timer downBeadTimer = new Timer(
-                AbacusBead.pixelRate,
-                new ActionListener() {
-                    private int value = displayedValue;
-
-                    public void actionPerformed(ActionEvent e) {
-                        boolean allDone = true;
-                        for (int i = value % 5 + 1; i < beads.length; i++) {
-                            if (beads[i].stepDown()) allDone = false;
-                        }
-                        if (allDone) {
-                            Timer timer = (Timer) e.getSource();
-                            timer.stop();
-                            if (listener != null) {
-                                listener.onDone();
-                            }
-                        }
-                        AbacusColumn.this.doRepaintIfRequested();
-                    }
-                }
-        );
-        downBeadTimer.start();
-
-        //make sure we update displayed value;
-        displayedValue = newDisplayedValue;
-    }
 
     /**
      * Refreshes beads positions to match models without any animations
