@@ -62,11 +62,49 @@ public class AbacusColumn extends JComponent{
     }
 
     //================================MAIN METHoDS==========================================//
+    /**
+     * Animates the beads positions to match the model.
+     */
+    public boolean stepBeads()
+    {
+        int newDisplayedValue = model.getColumn(columnNumber);
+        boolean moved = false;
+
+        //first we always move the 5
+        if (newDisplayedValue >= 5) {
+            moved = beads[0].stepUp();
+        } else {
+            moved = beads[0].stepDown();
+        }
+
+        //this is so that if the 5 bead moved, we don't start moving the other beads.
+        if(moved){
+            doRepaintIfRequested();
+            return true;
+        }
+
+
+        for (int i = 1; i <= newDisplayedValue % 5; i++) {
+            if (beads[i].stepUp()) moved = true;
+        }
+
+
+        for (int i = newDisplayedValue % 5 + 1; i < beads.length; i++) {
+            if (beads[i].stepDown()) moved = true;
+        }
+
+        doRepaintIfRequested();
+        //make sure we update displayed value;
+        //if we were at the right space to begin with...
+        if(!moved) displayedValue = newDisplayedValue;
+        return moved;
+    }
+
 
     /**
      * Animates the beads positions to match the model.
      */
-    public void refreshBeadsAndAnimate()
+    public void animateBeadsAndNotify(AbacusAnimationListener listener)
     {
         int newDisplayedValue = model.getColumn(columnNumber);
         if(newDisplayedValue == displayedValue) return; //short circut here
@@ -114,6 +152,9 @@ public class AbacusColumn extends JComponent{
                         if (allDone) {
                             Timer timer = (Timer) e.getSource();
                             timer.stop();
+                            if (listener != null) {
+                                listener.onDone();
+                            }
                         }
                         AbacusColumn.this.doRepaintIfRequested();
                     }

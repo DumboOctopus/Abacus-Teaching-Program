@@ -104,4 +104,13 @@ public class AbacusDataModel {
     }
 
 
+    /**
+     * Sets <code>AbacusModel</code> to represent 0.
+     */
+    public void reset()
+    {
+        mValue = 0;
+    }
+
+
 }

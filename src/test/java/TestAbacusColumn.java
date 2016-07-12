@@ -1,3 +1,4 @@
+import abacus.AbacusAnimationListener;
 import abacus.AbacusColumn;
 import abacus.AbacusDataModel;
 
@@ -25,13 +26,13 @@ public class TestAbacusColumn {
                 frame.add(column);
                 frame.setSize(100, 400);
                 frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-                Timer t = new Timer(500, e -> {
+                Timer t = new Timer(50, e -> {
 
-                    boolean[] updates = model.add(11);
+                    boolean[] updates = model.add(11);;
                     if(updates[0])
-                        column.refreshBeadsAndAnimate();
+                        column.animateBeadsAndNotify(null);
                     if(updates.length >= 2 && updates[1])
-                        column1.refreshBeadsAndAnimate();
+                        column1.animateBeadsAndNotify(null);
                 });
                 t.start();
             }

@@ -28,6 +28,7 @@ public class AbacusBead {
 
     //--------------GETTERS-----------//
 
+
     public int getCurrentState() {
         return currentState;
     }
