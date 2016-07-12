@@ -1,4 +1,6 @@
-package abacus;
+package com.dotneil.abacus;
+
+import com.dotneil.window.Operation;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,15 +43,17 @@ public class Abacus extends JComponent {
      *
      * @param operation
      * @param num2
+     *
+     * @throws ArrayIndexOutOfBoundsException if the subtraction operation is not possible
      */
-    public void animateOperationAndNotify(String operation, int num2, final AbacusAnimationListener listener)
+    public void animateOperationAndNotify(Operation operation, int num2, final AbacusAnimationListener listener)
     {
         switch (operation)
         {
-            case "+":
+            case ADDITION:
                 model.add(num2);
                 break;
-            case "-":
+            case SUBTRACTION:
                 model.subtract(num2);
                 break;
             default:
@@ -92,6 +96,14 @@ public class Abacus extends JComponent {
         repaint();
     }
 
+    public void reset(int num)
+    {
+        model.reset();
+        model.add(num);
+        for(AbacusColumn column: columns)
+            column.refreshBeads();
+        repaint();
+    }
 
 
 }

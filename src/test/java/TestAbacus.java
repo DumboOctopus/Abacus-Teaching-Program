@@ -1,6 +1,5 @@
-import abacus.Abacus;
-import abacus.AbacusAnimationListener;
-import abacus.AbacusDataModel;
+import com.dotneil.abacus.Abacus;
+import com.dotneil.window.Operation;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +23,7 @@ public class TestAbacus {
                 frame.setSize(600, 400);
                 frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 JButton button = new JButton("Add");
-                button.addActionListener(e -> abacus.animateOperationAndNotify("+", 1342, null));
+                button.addActionListener(e -> abacus.animateOperationAndNotify(Operation.ADDITION, 1342, null));
                 frame.add(button, BorderLayout.NORTH);
                 frame.addComponentListener(new ComponentListener() {
                     @Override

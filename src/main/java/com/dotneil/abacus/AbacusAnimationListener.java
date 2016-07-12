@@ -1,4 +1,4 @@
-package abacus;
+package com.dotneil.abacus;
 
 /**
  * Created by neilprajapati on 7/11/16.

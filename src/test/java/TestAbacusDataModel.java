@@ -1,5 +1,4 @@
-import abacus.Abacus;
-import abacus.AbacusDataModel;
+import com.dotneil.abacus.AbacusDataModel;
 import org.junit.Test;
 
 import static org.junit.Assert.assertArrayEquals;

@@ -1,12 +1,12 @@
-package abacus;
+package com.dotneil.abacus;
 
 /**
- * Represents the bead configuration of an unknown size abacus.
+ * Represents the bead configuration of an unknown size com.dotneil.abacus.
  * It can only represent a mValue up to Integer.MAX_VALUE
  */
 public class AbacusDataModel {
 
-    //mValue on the abacus. mValue >= 0
+    //mValue on the com.dotneil.abacus. mValue >= 0
     private int mValue;
 
 
@@ -19,9 +19,9 @@ public class AbacusDataModel {
 
 
     /**
-     * Adds <code>toAdd</code> to the abacus sum.
+     * Adds <code>toAdd</code> to the com.dotneil.abacus sum.
      *
-     * @param toAdd the number to add on the abacus
+     * @param toAdd the number to add on the com.dotneil.abacus
      * @return the columns which have changed. (0 indexed). if out[i] == true then column i needs updating
      *
      */
@@ -54,12 +54,12 @@ public class AbacusDataModel {
     }
 
     /**
-     * Subtracts <code>toSubtract</code> from abacus.
+     * Subtracts <code>toSubtract</code> from com.dotneil.abacus.
      *
-     * @param toSubtract the number to subtract from the abacus
+     * @param toSubtract the number to subtract from the com.dotneil.abacus
      * @return the columns which have changed. (0 indexed). if out[i] == true then column i needs updating
      * @throws ArithmeticException if the subtraction operation would cause
-     *                              abacus to have a negative sum.
+     *                              com.dotneil.abacus to have a negative sum.
      */
     public boolean[] subtract(int toSubtract)
     {

@@ -1,8 +1,6 @@
-package abacus;
+package com.dotneil.abacus;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Created by neilprajapati on 7/10/16.
@@ -83,7 +81,7 @@ public class AbacusBead {
     }
 
     /**
-     * Steps the abacus bead <code>AbacusBead.pixelRate</code> up.
+     * Steps the com.dotneil.abacus bead <code>AbacusBead.pixelRate</code> up.
      *
      * @return true if there was any movement, false otherwise
      */
@@ -128,7 +126,7 @@ public class AbacusBead {
 
     /**
      *
-     * Steps the abacus bead <code>AbacusBead.pixelRate</code> down.
+     * Steps the com.dotneil.abacus bead <code>AbacusBead.pixelRate</code> down.
      *
      * @return true if the position of the bead changed, false otherwise
      */

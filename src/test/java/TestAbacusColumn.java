@@ -1,6 +1,5 @@
-import abacus.AbacusAnimationListener;
-import abacus.AbacusColumn;
-import abacus.AbacusDataModel;
+import com.dotneil.abacus.AbacusColumn;
+import com.dotneil.abacus.AbacusDataModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +27,7 @@ public class TestAbacusColumn {
                 frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 Timer t = new Timer(50, e -> {
 
-                    boolean[] updates = model.add(11);;
+                    boolean[] updates = model.add(11);
                     if(updates[0])
                         column.animateBeadsAndNotify(null);
                     if(updates.length >= 2 && updates[1])

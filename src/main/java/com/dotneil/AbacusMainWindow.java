@@ -1,4 +1,6 @@
-import abacus.AbacusDataModel;
+package com.dotneil;
+
+import com.dotneil.abacus.AbacusDataModel;
 
 import javax.swing.*;
 

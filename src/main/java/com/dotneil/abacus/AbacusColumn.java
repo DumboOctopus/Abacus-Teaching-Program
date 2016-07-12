@@ -1,4 +1,4 @@
-package abacus;
+package com.dotneil.abacus;
 
 import javax.swing.*;
 import java.awt.*;
@@ -196,7 +196,7 @@ public class AbacusColumn extends JComponent{
     //===========================MAKE REPAINTS MORE EFFIECNET================================================//
 
     /**
-     * notifies the abacus column to refresh when possible. Usually used
+     * notifies the com.dotneil.abacus column to refresh when possible. Usually used
      * when multiple changes are made at the same time and calling <code>repaint()</code>
      * for each would be redundant
      */
