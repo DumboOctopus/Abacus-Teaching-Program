@@ -1,51 +1,48 @@
 package com.dotneil.abacus;
 
-import javax.swing.*;
-
 /**
  * Created by neilprajapati on 7/10/16.
  * neilprajapati, dont forget to javaDoc this file.
  */
 public class AbacusBead {
 
-    public static final int pixelRate = 10; //10 pixels per second
+    public static final double fractionRate = 0.015; //1.5% per 50 millis
     
 
     private double upFraction;
-    private double downFraction; // down = downFraction * getHeight();
+    private double downFraction;
     private final AbacusColumn column;
 
 
-    private int currentState;
+    private double currentState;
 
     public AbacusBead(AbacusColumn column, double downFraction, double upFraction) {
         this.column = column;
         this.downFraction = downFraction;
         this.upFraction = upFraction;
+        this.currentState = downFraction;
     }
 
     //--------------GETTERS-----------//
 
 
-    public int getCurrentState() {
+    public double getCurrentState() {
         return currentState;
     }
 
     //-----------SIMPLE MOVING UP AND DOWN-----------//
     public void goUp() {
 
-        int upstate = (int) (upFraction * column.getHeight());
-        if(currentState != upstate) {
-            currentState = upstate;
+        if(currentState != upFraction) {
+            currentState = upFraction;
             column.requestRepaint();
         }
 
     }
 
     public void goDown() {
-        int downState = (int) (downFraction * column.getHeight());
-        if(currentState != downState) {
-            currentState = downState;
+        if(currentState != downFraction) {
+            currentState = downFraction;
             column.requestRepaint();
         }
     }
@@ -54,38 +51,36 @@ public class AbacusBead {
     //-----------ANIMATING UP AND DOWN-----------//
 
     /**
-     * Steps the com.dotneil.abacus bead <code>AbacusBead.pixelRate</code> up.
+     * Steps the com.dotneil.abacus bead <code>AbacusBead.fractionRate</code> up.
      *
      * @return true if there was any movement, false otherwise
      */
     public boolean stepUp()
     {
-        int upState = (int)(upFraction*column.getHeight());
-        if (Math.abs(currentState - upState) >= pixelRate) {
-            currentState += pixelRate * (currentState > upState? -1: 1);
+        if (Math.abs(currentState - upFraction) >= fractionRate) {
+            currentState += fractionRate * (currentState > upFraction? -1: 1);
             column.requestRepaint();
             return true;
         }
-        currentState = upState;
+        currentState = upFraction;
         column.requestRepaint();
         return false;
     }
 
     /**
      *
-     * Steps the com.dotneil.abacus bead <code>AbacusBead.pixelRate</code> down.
+     * Steps the com.dotneil.abacus bead <code>AbacusBead.fractionRate</code> down.
      *
      * @return true if the position of the bead changed, false otherwise
      */
     public boolean stepDown()
     {
-        int downState = (int)(downFraction*column.getHeight());
-        if (Math.abs(currentState - downState) >= pixelRate) {
-            currentState += pixelRate * (currentState > downState? -1: 1);
+        if (Math.abs(currentState - downFraction) >= fractionRate) {
+            currentState += fractionRate * (currentState > downFraction? -1: 1);
             column.requestRepaint();
             return true;
         }
-        currentState = downState;
+        currentState = downFraction;
         column.requestRepaint();
         return false;
     }

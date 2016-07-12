@@ -51,11 +51,11 @@ public class AbacusColumn extends JComponent{
 
         if(columnNumber %2 == 0) g.setColor(Color.ORANGE);
         else g.setColor(Color.darkGray);
-        drawBead(beads[0].getCurrentState(), g);
-        drawBead(beads[1].getCurrentState(), g);
-        drawBead(beads[2].getCurrentState(), g);
-        drawBead(beads[3].getCurrentState(), g);
-        drawBead(beads[4].getCurrentState(), g);
+        drawBead((int)(beads[0].getCurrentState()*getHeight()), g);
+        drawBead((int)(beads[1].getCurrentState()*getHeight()), g);
+        drawBead((int)(beads[2].getCurrentState()*getHeight()), g);
+        drawBead((int)(beads[3].getCurrentState()*getHeight()), g);
+        drawBead((int)(beads[4].getCurrentState()*getHeight()), g);
     }
     private void drawBead(int height, Graphics g)
     {
