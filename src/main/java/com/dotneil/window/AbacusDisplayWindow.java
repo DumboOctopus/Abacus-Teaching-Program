@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.util.InputMismatchException;
 
 /**
  *
@@ -115,7 +116,7 @@ public class AbacusDisplayWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Desktop desktop = Desktop.getDesktop();
-                String message = "mailto:neilp0101@gmail.com?subject=Bug%20Dectected%20For%20AbacusProgram&body=Please%20Place%20Description%20Here";
+                String message = "mailto:neilp0101@gmail.com?subject=Bug%20Dectected%20For%20Abacusteachin&body=Please%20Place%20Description%20Here";
                 URI uri = URI.create(message);
                 try {
                     desktop.mail(uri);
@@ -166,15 +167,14 @@ public class AbacusDisplayWindow extends JFrame {
             abacus.animateOperationAndNotify(op, toAdd, null);
         } catch (NumberFormatException e)
         {
-            e.printStackTrace();
-            expressionField.setText(expressionField.getText()+ " is not a valid expression bruh. ");
-            expressionField.requestFocus();
+            expressionField.setText(expression.substring(1, expression.length())+ " is not a valid number bruh. ");
         } catch (ArrayIndexOutOfBoundsException e)
         {
-            e.printStackTrace();
-            expressionField.setText(expressionField.getText()+ " is not possible ");
-            expressionField.requestFocus();
+            expressionField.setText(expressionField.getText()+ " will make the number on the abacus negative. ");
+        } catch (InputMismatchException e){
+            expressionField.setText(expression.charAt(0) + " is not a command");
         }
+        expressionField.requestFocus();
 
     }
 

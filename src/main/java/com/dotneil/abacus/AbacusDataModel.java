@@ -6,8 +6,9 @@ package com.dotneil.abacus;
  */
 public class AbacusDataModel {
 
-    //mValue on the com.dotneil.abacus. mValue >= 0
-    private int mValue;
+    //mValue on the abacus. mValue >= 0
+    //is a long just incase we have some trolly kids who then become confused as they see the number go negative.
+    private long mValue;
 
 
 

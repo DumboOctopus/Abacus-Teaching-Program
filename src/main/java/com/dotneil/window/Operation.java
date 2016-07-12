@@ -8,20 +8,20 @@ package com.dotneil.window;
  * Created on 2/21/16.
  */
 public enum Operation {
-    ADDITION("+", (d1, d2) -> d1 + d2),
-    SUBTRACTION("-", (d1, d2) -> d1 - d2),
-    MULTIPLICATION("*", (d1, d2) -> d1 * d2),
-    DIVISION("/", (d1, d2) -> d1/d2);
+    ADDITION("+" ),
+    SUBTRACTION("-" ),
+    MULTIPLICATION("*" ),
+    DIVISION("/" ),
+    ASSIGNMENT("=");
+    
 
 
     //======================ENUM STUFF======================//
     private final String asString;
-    private final Operatable operatable;
 
-    Operation(String asString, Operatable operatable)
+    private Operation(String asString)
     {
         this.asString = asString;
-        this.operatable = operatable;
     }
 
     @Override
@@ -31,28 +31,12 @@ public enum Operation {
 
     public static Operation parseOperation(String s)
     {
-        switch (s)
+        for(Operation op: values())
         {
-            case "+":
-                return ADDITION;
-            case "-":
-                return SUBTRACTION;
-            case "*":
-                return MULTIPLICATION;
-            case "/":
-                return DIVISION;
+            if(op.asString.equals(s))return op;
         }
         return ADDITION;
     }
 
-    public double doOperation(double d1, double d2)
-    {
-        return operatable.doOperation(d1, d2);
-    }
-
-    private interface Operatable
-    {
-        double doOperation(double d1, double d2);
-    }
 
 }

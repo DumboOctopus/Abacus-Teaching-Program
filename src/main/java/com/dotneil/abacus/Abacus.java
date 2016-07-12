@@ -13,7 +13,7 @@ import java.util.InputMismatchException;
  * neilprajapati, dont forget to javaDoc this file.
  */
 public class Abacus extends JComponent {
-    public static final int NUM_COLUMNS = 10;
+    public static final int NUM_COLUMNS = 8;
 
     private AbacusColumn[] columns;
     private AbacusDataModel model;
@@ -56,6 +56,9 @@ public class Abacus extends JComponent {
             case SUBTRACTION:
                 model.subtract(num2);
                 break;
+            case ASSIGNMENT:
+                reset(num2);
+                return;
             default:
                 throw new InputMismatchException(operation+ " is not an operation lool");
         }
@@ -67,10 +70,11 @@ public class Abacus extends JComponent {
                     private AbacusAnimationListener innerListener = listener;
 
                     public void actionPerformed(ActionEvent e) {
+                        Timer thisTimer = (Timer)e.getSource();
+
                         if(!columns[currIndex].stepBeads())
                         {
                             currIndex ++;
-
                             if(currIndex >= NUM_COLUMNS)
                             {
                                 if(innerListener != null){
