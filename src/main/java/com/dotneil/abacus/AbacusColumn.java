@@ -6,10 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by neilprajapati on 7/8/16.
- * neilprajapati, dont forget to javaDoc this file.
- *
- * Fixme: when resizing, beads do not work.
+ * An implementation
  */
 public class AbacusColumn extends JComponent{
     private AbacusDataModel model;
@@ -46,7 +43,7 @@ public class AbacusColumn extends JComponent{
     protected void paintComponent(Graphics g) {
         g.setColor(Color.BLACK);
         g.fillRect(0, getHeight()/4, getWidth(), getHeight()/8);
-
+        g.fillRect(getWidth()/2 - getWidth()/12, 0, getWidth()/6, getHeight());
 
 
         if(columnNumber %2 == 0) g.setColor(Color.ORANGE);

@@ -11,6 +11,9 @@ import java.util.InputMismatchException;
 /**
  * Created by neilprajapati on 7/8/16.
  * neilprajapati, dont forget to javaDoc this file.
+ *
+ * add bars
+ * remove chapter
  */
 public class Abacus extends JComponent {
     public static final int NUM_COLUMNS = 8;
@@ -31,8 +34,8 @@ public class Abacus extends JComponent {
         columns = new AbacusColumn[NUM_COLUMNS];
         for (int i = 0; i < columns.length; i++)
         {
-            columns[i] = new AbacusColumn(model, NUM_COLUMNS -1- i);
-            add(columns[i]);
+            columns[NUM_COLUMNS -1-i] = new AbacusColumn(model, NUM_COLUMNS -1- i);
+            add(columns[NUM_COLUMNS -1-i]);
         }
     }
 
@@ -50,13 +53,16 @@ public class Abacus extends JComponent {
      */
     public void animateOperationAndNotify(Operation operation, int num2, final AbacusAnimationListener listener)
     {
+        boolean[] updates;
         switch (operation)
         {
             case ADDITION:
-                model.add(num2);
+                updates =  model.add(num2);
+                refreshAndNotify(updates, listener);
                 break;
             case SUBTRACTION:
-                model.subtract(num2);
+                updates = model.subtract(num2);
+                refreshAndNotify(updates, listener);
                 break;
             case ASSIGNMENT:
                 reset(num2);
@@ -65,19 +71,30 @@ public class Abacus extends JComponent {
                 throw new InputMismatchException(operation+ " is not an operation lool");
         }
 
+    }
+
+    private void refreshAndNotify(boolean[] updates, AbacusAnimationListener listener)
+    {
         Timer t = new Timer(
                 50,
                 new ActionListener() {
-                    private int currIndex = 0;
+                    private int currIndex = updates.length - 1;
                     private AbacusAnimationListener innerListener = listener;
+                    private boolean r = false;
 
                     public void actionPerformed(ActionEvent e) {
                         Timer thisTimer = (Timer)e.getSource();
 
+
+                        thisTimer.setDelay(50);
                         if(!columns[currIndex].stepBeads())
                         {
-                            currIndex ++;
-                            if(currIndex >= NUM_COLUMNS)
+                            thisTimer.setDelay(1000);
+                            //go to next one
+                            do {
+                                currIndex--;
+                            } while(currIndex >= 0 && !updates[currIndex]);
+                            if(currIndex < 0)
                             {
                                 if(innerListener != null){
                                     innerListener.onDone();
