@@ -41,9 +41,10 @@ public class AbacusColumn extends JComponent{
     //============================FROM JCOMPONENT============================================//
     @Override
     protected void paintComponent(Graphics g) {
+        g.setColor(new Color(152, 118, 40));
+        g.fillRect(getWidth()/2 - getWidth()/12, 0, getWidth()/6, getHeight());
         g.setColor(Color.BLACK);
         g.fillRect(0, getHeight()/4, getWidth(), getHeight()/8);
-        g.fillRect(getWidth()/2 - getWidth()/12, 0, getWidth()/6, getHeight());
 
 
         if(columnNumber %2 == 0) g.setColor(Color.ORANGE);
