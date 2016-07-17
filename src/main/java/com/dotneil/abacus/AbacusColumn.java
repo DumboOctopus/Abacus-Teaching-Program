@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * An implementation
+ * Abacus Column which makes up an Abacus.
  */
 public class AbacusColumn extends JComponent{
     private AbacusDataModel model;
@@ -62,7 +62,11 @@ public class AbacusColumn extends JComponent{
 
     //================================MAIN METHoDS==========================================//
     /**
-     * Animates the beads positions to match the model.
+     * Animates the beads positions to match the model. Does a small move then returns.
+     * Will move 5 bead first then the ones beads. Usually called in a Timer
+     *
+     * @return true if recalling is still necessary false otherwise.
+     * @see Timer
      */
     public boolean stepBeads()
     {
@@ -102,7 +106,7 @@ public class AbacusColumn extends JComponent{
 
 
     /**
-     * Refreshes beads positions to match models without any animations
+     * Refreshes beads positions to match models without any animations. Does it instantenously
      */
     public void refreshBeads()
     {
